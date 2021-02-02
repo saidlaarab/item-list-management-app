@@ -3,8 +3,6 @@ import {SERVER_URL} from '../constants';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 import AddCar from './AddCar';
-//import { toast } from 'react-toastify';
-//import {ToastContainer} from 'react-toastify';
 import {CSVLink} from 'react-csv';
 import {Button, Grid} from '@material-ui/core';
 
@@ -41,7 +39,10 @@ class CarList extends Component {
               body: JSON.stringify(car)
             }
         )
-        .then( result  => this.fetchCars())
+        .then( result  => {
+            this.fetchCars();
+            this.setState({open:true, message:"Car successfully added."});
+        })
         .catch(err => console.log('Can\'t add the new car! ' + err));
 
     };
@@ -177,7 +178,7 @@ class CarList extends Component {
                 style = {{width:'300', color:'green'}}
                 open = {this.state.open}
                 onClose = {this.handleClose}
-                autoHideDuration = {1500}
+                autoHideDuration = {2000}
                 message = {this.state.message}
             />
         </div>);
