@@ -41,7 +41,7 @@ class CarList extends Component {
         )
         .then( result  => {
             this.fetchCars();
-            this.setState({open:true, message:"Car successfully added."});
+            this.setState({open:true, message:'Car successfully added.'});
         })
         .catch(err => console.log('Can\'t add the new car! ' + err));
 
@@ -57,7 +57,7 @@ class CarList extends Component {
                         const data = [...this.state.cars];
                         data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
                         this.setState({cars: data});
-                    } 
+                    }
                 }
                 
                 dangerouslySetInnerHTML = {
