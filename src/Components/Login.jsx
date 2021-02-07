@@ -3,6 +3,7 @@ import {SERVER_URL} from "../constants";
 import {TextField, Button} from "@material-ui/core";
 import CarList from './CarList';
 import {Snackbar} from '@material-ui/core';
+import {AppBar, Toolbar} from '@material-ui/core';
 
 class Login extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ class Login extends Component {
 
     handleChange = (e) => this.setState({[e.target.name]: e.target.value});
 
-    handleLogin = () => {
+    handleLogin = (e) => {
         const url = SERVER_URL + "/login";
         fetch(url, {
             method: "POST",
@@ -37,6 +38,7 @@ class Login extends Component {
             }
         })
         .catch(err => console.log(err));
+        e.preventDefault();
     };
 
     handleClose = () => this.setState({open:false});
@@ -48,7 +50,14 @@ class Login extends Component {
 
     render() {
         if(this.state.credentials_valid){
-            return (<CarList logout={this.logout}/>);
+            return (
+            <React.Fragment>
+                <AppBar position='static' color='default'>
+                    <Toolbar><h2>List of cars</h2></Toolbar>
+                </AppBar>
+                <CarList logout={this.logout}/>
+            </React.Fragment>
+            );
         }else{
             const style = { 
                             paddingTop: "50px",
@@ -56,22 +65,49 @@ class Login extends Component {
                             flexDirection:"column",
                             alignItems: "center"};
             return (
-                <div style = {style}>
-                    <TextField name="username" placeholder="enter your username"
-                            onChange={this.handleChange}/><br/>
-                    <TextField name="password" placeholder="enter your password" 
-                            type="password"
-                            onChange={this.handleChange}/><br/>
-                    <Button variant="contained" color="primary"
-                            onClick={this.handleLogin}
-                    >Login</Button>
+                <React.Fragment>
+                    <AppBar position='static' color='default'>
+                        <Toolbar><h2>Please Sign In</h2></Toolbar>
+                    </AppBar>
+                    <div class="container">
+                        <form class="form-signin" onSubmit={this.handleLogin}>
+                            <p>
+                                <label for="username" class="sr-only">Username</label>
+                                <input type="text" id="username" name="username" class="form-control" onChange={this.handleChange} placeholder="Username" required="" autofocus=""/>
+                            </p>
+                            <p>
+                                <label for="password" class="sr-only">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" onChange={this.handleChange} placeholder="Password" required=""/>
+                            </p>
+                            <button class="btn btn-lg btn-primary btn-block" type='submit'>Sign in</button>
+                        </form>
+                    </div>
                     <Snackbar
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        autoHideDuration={2000}
-                        message="Check your username and password!"
+                            open={this.state.open}
+                            onClose={this.handleClose}
+                            autoHideDuration={2000}
+                            message="Check your username and password!"
                     />
-                </div>);
+
+                    {/* the old version */}
+                    {/* <div style = {style}>
+                        <TextField name="username" placeholder="enter your username"
+                                onChange={this.handleChange}/><br/>
+                        <TextField name="password" placeholder="enter your password" 
+                                type="password"
+                                onChange={this.handleChange}/><br/>
+                        <Button variant="contained" color="primary"
+                                onClick={this.handleLogin}
+                        >Login</Button>
+                        <Snackbar
+                            open={this.state.open}
+                            onClose={this.handleClose}
+                            autoHideDuration={2000}
+                            message="Check your username and password!"
+                        />
+                    </div> */}
+
+                </React.Fragment>);
         }
             
     }
