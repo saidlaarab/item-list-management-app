@@ -80,7 +80,14 @@ class Login extends Component {
                                 <input type="password" id="password" name="password" class="form-control" onChange={this.handleChange} placeholder="Password" required=""/>
                             </p>
                             <button class="btn btn-lg btn-primary btn-block" type='submit'>Sign in</button>
-                        </form>
+                            <br/>
+                            <div className='guest-account'>
+                                <h4>You can sign in as a guest:</h4>
+                                <strong>Username: </strong>guest
+                                <br/>
+                                <strong>Password: </strong>guest-pass
+                            </div>
+                        </form>  
                     </div>
                     <Snackbar
                             open={this.state.open}
